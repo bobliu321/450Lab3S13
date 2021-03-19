@@ -1,0 +1,14 @@
+$DATA1 SOURCE='HSPICE' VERSION='D-2010.03-SP2 32-BIT'
+.TITLE '* hspice deck'
+ ttran            tpdrise_s_2      tpdfall_s_2      totrrise_s_2      
+                  totrfall_s_2     tpdrise_e_2      tpdfall_e_2       
+                  totrrise_e_2     totrfall_e_2     temper            
+                  alter#            
+  2.000e-09        5.961e-10        4.433e-10        3.088e-10        
+                   2.057e-10        4.343e-10        3.529e-10        
+                   2.782e-10        2.328e-10        125.0000         
+                  1                 
+  1.000e-09        4.031e-10        3.059e-10        2.048e-10        
+                   1.325e-10        3.001e-10        2.476e-10        
+                   1.848e-10        1.461e-10        125.0000         
+                  1                 

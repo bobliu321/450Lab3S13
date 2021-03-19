@@ -1,0 +1,79 @@
+@(#)$CDS: LVS.exe version 5.1.0 06/20/2007 02:10 (cicln03) $
+
+Command line: /ensc/CMC/tools/cadence/IC5141USR5_lnx86/tools.lnx86/dfII/bin/32bit/LVS.exe -dir /local-scratch/localhome/escmc27/ensc450/CDS/and -l /local-scratch/localhome/escmc27/ensc450/CDS/and/layout /local-scratch/localhome/escmc27/ensc450/CDS/and/schematic
+Like matching is enabled.
+
+    Net-list summary for /local-scratch/localhome/escmc27/ensc450/CDS/and/layout/netlist
+       count
+	7		nets
+	5		terminals
+	3		nfet
+	3		pfet
+
+    Net-list summary for /local-scratch/localhome/escmc27/ensc450/CDS/and/schematic/netlist
+       count
+	7		nets
+	5		terminals
+	3		nfet
+	3		pfet
+
+Devices in the netlist but not in the rules:
+        nfet pfet
+
+The net-lists match.
+
+			     layout  schematic
+				instances
+	un-matched		0	0
+	rewired			0	0
+	size errors		0	0
+	pruned			0	0
+	active			6	6
+	total			6	6
+
+				  nets
+	un-matched		0	0
+	merged			0	0
+	pruned			0	0
+	active			7	7
+	total			7	7
+
+				terminals
+	un-matched		0	0
+	matched but
+	different type		0	0
+	total			5	5
+
+
+Probe files from /local-scratch/localhome/escmc27/ensc450/CDS/and/schematic
+
+devbad.out:
+
+netbad.out:
+
+mergenet.out:
+
+termbad.out:
+
+prunenet.out:
+
+prunedev.out:
+
+audit.out:
+
+
+Probe files from /local-scratch/localhome/escmc27/ensc450/CDS/and/layout
+
+devbad.out:
+
+netbad.out:
+
+mergenet.out:
+
+termbad.out:
+
+prunenet.out:
+
+prunedev.out:
+
+audit.out:

@@ -1,0 +1,82 @@
+* HSPICE Deck 
+
+* Transistor models 
+.protect
+.LIB `/CMC/setups/ensc450/HSPICE/cmosp18/log018.l' SS  $ typical process corner.
+.unprotect
+
+* Supply Sources
+.param pwr=1.05V
+.temp  125
+Vvdd  vdd!  0 dc pwr
+Vgnd  gnd!  0 dc 0
+
+************************************************************
+.subckt IV_schematic a z vdd! gnd!
+MNMOS Z A GND! GND!  NCH  L=180E-9 W=500E-9 AD=+2.40000000E-13 AS=+2.40000000E-13 
++PD=+1.09600000E-05 PS=+1.09600000E-05 NRD=+5.40000000E-01 NRS=+5.40000000E-01 
++M=1.0 
+
+MPMOS Z A VDD! VDD!  PCH  L=180E-9 W=1E-6 AD=+4.80000000E-13 AS=+4.80000000E-13 
++PD=+2.96000000E-06 PS=+2.96000000E-06 NRD=+2.70000000E-01 NRS=+2.70000000E-01 
++M=1.0 
+.ends
+
+.subckt IV_extracted a z vdd! gnd!
+M0 VDD! A Z VDD!  PCH  L=180.000000682412E-9 W=999.999997475243E-9
++AD=479.999991576802E-15 AS=479.99991576802E-15 PD=1.95999996321916E-6
++PS=1.95999996321916E-6 NRD=+2.70000014E-01 NRS=+2.70000001E+00 M=1.0
+
+M1 GND! A Z GND!  NCH  L=180.000000682412E-9 W=499.999998737621E-9
++AD=239.999995788401E-15 AS=239.999995788401E-15 PD=1.46000002132496E-6
++PS=1.46000002132496E-6 NRD=+5.40000028E-01 NRS=+5.40000028E-01 M=1.0
+.ends
+
+***********************************************************
+
+
+XinvSchem a zs vdd! gnd! IV_schematic 
+C1load zs 0 2f
+
+XinvExtr a ze vdd! gnd! IV_extracted 
+C2load ze 0 2f
+
+
+
+* Input Stimuli 
+* VA  a  0 PWL(0n 0 9n 0 10n pwr 19n pwr 20n 0)
+VA  a  0 PWL(0n 0 '20n-Ttran' 0 20n pwr 40n pwr '40n+Ttran' 0 50n 0)
+
+
+* .tran 0.01ps 40ns START=0 
+.tran 0.01ps 50ns START=0 SWEEP Ttran POI 2 2n 1n
+
+
+
+.option post 
+
+.meas tran tpdrise_s_2  trig v(a)  val='pwr*0.5' cross=2
++                     	targ v(zs) val='pwr*0.5' cross=2 
+.meas tran tpdfall_s_2  trig v(a)  val='pwr*0.5' cross=1
++                     	targ v(zs) val='pwr*0.5' cross=1 
+.meas tran Totrrise_s_2 trig v(zs) val='pwr*0.2' rise=1
++                     	targ v(zs) val='pwr*0.8' rise=1
+.meas tran Totrfall_s_2 trig v(zs) val='pwr*0.8' fall=1
++                     	targ v(zs) val='pwr*0.2' fall=1
+************************************************
+
+.meas tran tpdrise_e_2  trig v(a)  val='pwr*0.5' cross=2
++                     	targ v(ze) val='pwr*0.5' cross=2 
+.meas tran tpdfall_e_2  trig v(a)  val='pwr*0.5' cross=1
++                     	targ v(ze) val='pwr*0.5' cross=1 
+.meas tran Totrrise_e_2 trig v(ze) val='pwr*0.2' rise=1
++                     	targ v(ze) val='pwr*0.8' rise=1
+.meas tran Totrfall_e_2 trig v(ze) val='pwr*0.8' fall=1
++                     	targ v(ze) val='pwr*0.2' fall=1
+************************************************
+
+
+
+
+
+.end

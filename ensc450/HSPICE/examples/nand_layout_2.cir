@@ -1,0 +1,94 @@
+* HSPICE Deck 
+
+* Transistor models 
+.protect
+.LIB `/CMC/setups/ensc450/HSPICE/cmosp18/log018.l' SS  $ typical process corner.
+.unprotect
+
+* Supply Sources
+.param pwr=1.05V 
+.temp  125
+Vvdd  vdd!  0 dc pwr
+Vgnd  gnd!  0 dc 0
+
+************************************************************
+.subckt NAND_schematic a b z vdd! gnd!
+M3 NET6 B GND! GND!  NCH  L=180E-9 W=1E-6 AD=+4.80000000E-13 
++AS=+4.80000000E-13 PD=+2.96000000E-06 PS=+2.96000000E-06 NRD=+2.70000000E-01 
++NRS=+2.70000000E-01 M=1.0 
+M2 Z A NET6 GND!  NCH  L=180E-9 W=1E-6 AD=+4.80000000E-13 AS=+4.80000000E-13 
++PD=+2.96000000E-06 PS=+2.96000000E-06 NRD=+2.70000000E-01 NRS=+2.70000000E-01 
++M=1.0 
+M1 Z B VDD! VDD!  PCH  L=180E-9 W=1E-6 AD=+4.80000000E-13 AS=+4.80000000E-13 
++PD=+2.96000000E-06 PS=+2.96000000E-06 NRD=+2.70000000E-01 NRS=+2.70000000E-01 
++M=1.0 
+M0 Z A VDD! VDD!  PCH  L=180E-9 W=1E-6 AD=+4.80000000E-13 AS=+4.80000000E-13 
++PD=+2.96000000E-06 PS=+2.96000000E-06 NRD=+2.70000000E-01 NRS=+2.70000000E-01 
++M=1.0 
+
+.ends
+
+.subckt NAND_extracted a b z vdd! gnd!
+M3 VDD! B Z VDD!  PCH  L=180.000000682412E-9 W=999.999997475243E-9 
++AD=479.999991576802E-15 AS=270.000005426346E-15 PD=1.95999996321916E-6 
++PS=539.999973625527E-9 NRD=+2.70000001E-01 NRS=+2.70000014E-01 M=1.0 
+M4 Z A VDD! VDD!  PCH  L=180.000000682412E-9 W=999.999997475243E-9 
++AD=270.000005426346E-15 AS=479.999991576802E-15 PD=539.999973625527E-9 
++PS=1.95999996321916E-6 NRD=+2.70000014E-01 NRS=+2.70000001E-01 M=1.0 
+M5 Z B 1 GND!  NCH  L=180.000000682412E-9 W=999.999997475243E-9 
++AD=479.999991576802E-15 AS=270.000005426346E-15 PD=1.95999996321916E-6 
++PS=539.999973625527E-9 NRD=+2.70000014E-01 NRS=+2.70000014E-01 M=1.0 
+M6 1 A GND! GND!  NCH  L=180.000000682412E-9 W=999.999997475243E-9 
++AD=270.000005426346E-15 AS=479.999991576802E-15 PD=539.999973625527E-9 
++PS=1.95999996321916E-6 NRD=+2.70000014E-01 NRS=+2.70000014E-01 M=1.0
+.ends
+
+***********************************************************
+
+
+
+
+
+***********************************************************
+
+
+XnandSchem a b zs vdd! gnd! NAND_schematic 
+C1load zs 0 2f
+
+XnandExt a b ze vdd! gnd! NAND_extracted 
+C2load ze 0 2f
+
+
+* Input Stimuli 
+* VA  a  0 PWL(0n 0 9n 0 10n pwr 19n pwr 20n 0)
+VA  a  0 PWL(0n 0 '20n-Ttran' 0 20n pwr 40n pwr '40n+Ttran' 0 50n 0)
+VB  b  0 PWL(0n 0 '8n-Ttran' 0 8n pwr 14n pwr '14n+Ttran' 0 '28n-Ttran' 0 28n pwr 34n pwr '34n+Ttran' 0 50n 0)
+
+
+* .tran 0.01ps 40ns START=0 
+.tran 0.01ps 50ns START=0 SWEEP Ttran POI 2 2n 1n 
+
+.option post
+
+.meas tran tpdrise_s_2  trig v(b)  val='pwr*0.5' cross=4
++                     	targ v(zs) val='pwr*0.5' cross=2 
+.meas tran tpdfall_s_2  trig v(b)  val='pwr*0.5' cross=3
++                     	targ v(zs) val='pwr*0.5' cross=1 
+.meas tran Totrrise_s_2 trig v(zs) val='pwr*0.2' rise=1
++                     	targ v(zs) val='pwr*0.8' rise=1
+.meas tran Totrfall_s_2 trig v(zs) val='pwr*0.8' fall=1
++                     	targ v(zs) val='pwr*0.2' fall=1
+************************************************
+
+
+.meas tran tpdrise_e_2  trig v(b)  val='pwr*0.5' cross=4
++                     	targ v(ze) val='pwr*0.5' cross=2 
+.meas tran tpdfall_e_2  trig v(b)  val='pwr*0.5' cross=3
++                     	targ v(ze) val='pwr*0.5' cross=1 
+.meas tran Totrrise_e_2 trig v(ze) val='pwr*0.2' rise=1
++                     	targ v(ze) val='pwr*0.8' rise=1
+.meas tran Totrfall_e_2 trig v(ze) val='pwr*0.8' fall=1
++                     	targ v(ze) val='pwr*0.2' fall=1
+************************************************
+
+.end

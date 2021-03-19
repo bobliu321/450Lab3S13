@@ -1,0 +1,107 @@
+* HSPICE Deck 
+
+* Transistor models 
+.protect
+.LIB `/CMC/setups/ensc450/HSPICE/cmosp18/log018.l' SS  $ typical process corner.
+.unprotect
+
+* Supply Sources
+.param pwr=1.05V 
+.temp  125
+Vvdd  vdd!  0 dc pwr
+Vgnd  gnd!  0 dc 0
+
+************************************************************
+.subckt OR_schematic a b z vdd! gnd!
+M5 Z NET22 VDD! VDD!  PCH  L=180E-9 W=1E-6 AD=+4.80000000E-13 
++AS=+4.80000000E-13 PD=+2.96000000E-06 PS=+2.96000000E-06 NRD=+2.70000000E-01 
++NRS=+2.70000000E-01 M=1.0 
+M0 NET17 A VDD! VDD!  PCH  L=180E-9 W=2E-6 AD=+9.60000000E-13 
++AS=+9.60000000E-13 PD=+4.96000000E-06 PS=+4.96000000E-06 NRD=+1.35000000E-01 
++NRS=+1.35000000E-01 M=1.0 
+M1 NET22 B NET17 VDD!  PCH  L=180E-9 W=2E-6 AD=+9.60000000E-13 
++AS=+9.60000000E-13 PD=+4.96000000E-06 PS=+4.96000000E-06 NRD=+1.35000000E-01 
++NRS=+1.35000000E-01 M=1.0 
+M4 Z NET22 GND! GND!  NCH  L=180E-9 W=500E-9 AD=+2.40000000E-13 
++AS=+2.40000000E-13 PD=+1.09600000E-05 PS=+1.09600000E-05 NRD=+5.40000000E-01 
++NRS=+5.40000000E-01 M=1.0 
+M2 NET22 A GND! GND!  NCH  L=180E-9 W=500E-9 AD=+2.40000000E-13 
++AS=+2.40000000E-13 PD=+1.09600000E-05 PS=+1.09600000E-05 NRD=+5.40000000E-01 
++NRS=+5.40000000E-01 M=1.0 
+M3 NET22 B GND! GND!  NCH  L=180E-9 W=500E-9 AD=+2.40000000E-13 
++AS=+2.40000000E-13 PD=+1.09600000E-05 PS=+1.09600000E-05 NRD=+5.40000000E-01 
++NRS=+5.40000000E-01 M=1.0 
+
+.ends
+
+
+.subckt OR_extracted a b z vdd! gnd!
+M4 VDD! 1 Z VDD!  PCH  L=180.000000682412E-9 W=999.999997475243E-9 
++AD=479.999991576802E-15 AS=479.999991576802E-15 PD=1.95999996321916E-6 
++PS=1.95999996321916E-6 NRD=+2.70000014E-01 NRS=+2.70000014E-01 M=1.0 
+M5 1 B 2 VDD!  PCH  L=180.000000682412E-9 W=1.99999999495049E-6 
++AD=959.999983153603E-15 AS=540.000010852693E-15 PD=2.96000007438124E-6 
++PS=539.999973625527E-9 NRD=+1.35000034E-01 NRS=+1.35000034E-01 M=1.0 
+M6 2 A VDD! VDD!  PCH  L=180.000000682412E-9 W=1.99999999495049E-6 
++AD=540.000010852693E-15 AS=959.999983153603E-15 PD=539.999973625527E-9 
++PS=2.96000007438124E-6 NRD=+1.35000000E-01 NRS=+1.35000034E-01 M=1.0 
+M7 GND! B 1 GND!  NCH  L=180.000000682412E-9 W=499.999998737621E-9 
++AD=239.999995788401E-15 AS=135.000002713173E-15 PD=1.46000002132496E-6 
++PS=539.999973625527E-9 NRD=+5.40000001E-01 NRS=+5.40000001E-01 M=1.0 
+M8 1 A GND! GND!  NCH  L=180.000000682412E-9 W=499.999998737621E-9 
++AD=135.000002713173E-15 AS=239.999995788401E-15 PD=539.999973625527E-9 
++PS=1.46000002132496E-6 NRD=+5.40000001E-01 NRS=+5.40000001E-01 M=1.0 
+M9 GND! 1 Z GND!  NCH  L=180.000000682412E-9 W=499.999998737621E-9 
++AD=239.999995788401E-15 AS=239.999995788401E-15 PD=1.46000002132496E-6 
++PS=1.46000002132496E-6 NRD=+5.40000028E-01 NRS=+5.40000001E-01 M=1.0  
+.ends
+
+***********************************************************
+
+
+
+
+
+***********************************************************
+
+
+XorSchem a b zs vdd! gnd! OR_schematic 
+C1load zs 0 10f
+
+XorExt a b ze vdd! gnd! OR_extracted 
+C2load ze 0 10f
+
+
+* Input Stimuli 
+* VA  a  0 PWL(0n 0 9n 0 10n pwr 19n pwr 20n 0)
+VA  a  0 PWL(0n 0 '20n-Ttran' 0 20n pwr 40n pwr '40n+Ttran' 0 50n 0)
+VB  b  0 PWL(0n 0 '8n-Ttran' 0 8n pwr 14n pwr '14n+Ttran' 0 '28n-Ttran' 0 28n pwr 34n pwr '34n+Ttran' 0 50n 0)
+
+
+* .tran 0.01ps 40ns START=0 
+.tran 0.01ps 50ns START=0 SWEEP Ttran POI 2 2n 1n 
+
+.option post
+
+.meas tran tpdrise_s_2  trig v(b)  val='pwr*0.5' cross=1
++                     	targ v(zs) val='pwr*0.5' cross=1 
+.meas tran tpdfall_s_2  trig v(b)  val='pwr*0.5' cross=2
++                     	targ v(zs) val='pwr*0.5' cross=2 
+.meas tran Totrrise_s_2 trig v(zs) val='pwr*0.2' rise=1
++                     	targ v(zs) val='pwr*0.8' rise=1
+.meas tran Totrfall_s_2 trig v(zs) val='pwr*0.8' fall=1
++                     	targ v(zs) val='pwr*0.2' fall=1
+************************************************
+
+
+.meas tran tpdrise_e_2  trig v(b)  val='pwr*0.5' cross=1
++                     	targ v(ze) val='pwr*0.5' cross=1 
+.meas tran tpdfall_e_2  trig v(b)  val='pwr*0.5' cross=2
++                     	targ v(ze) val='pwr*0.5' cross=2 
+.meas tran Totrrise_e_2 trig v(ze) val='pwr*0.2' rise=1
++                     	targ v(ze) val='pwr*0.8' rise=1
+.meas tran Totrfall_e_2 trig v(ze) val='pwr*0.8' fall=1
++                     	targ v(ze) val='pwr*0.2' fall=1
+************************************************
+
+.end

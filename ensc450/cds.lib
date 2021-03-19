@@ -1,0 +1,2 @@
+INCLUDE $CMC_HOME/kits/cmosp18/cds.lib
+DEFINE inverter /local-scratch/localhome/escmc27/ensc450/inverter

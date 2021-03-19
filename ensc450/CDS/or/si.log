@@ -1,0 +1,75 @@
+
+Running simulation in directory: "/local-scratch/localhome/escmc27/ensc450/CDS/or".
+
+
+
+Begin netlist:    Mar 14 19:16:43 2021
+	view name list	= ("auLvs" "extracted" "schematic")
+	stop name list	= ("auLvs")
+	library name	= "or"
+	cell name	= "or"
+	view name	= "or_extracted"
+	globals lib	= "basic"
+Running Artist Flat Netlisting ...
+End netlist:    Mar 14 19:16:43 2021
+
+Moving original netlist to extNetlist
+Removing parasitic components from netlist
+	presistors removed:  0
+	pcapacitors removed: 0
+	pinductors removed:  0
+	pdiodes removed:     0
+	trans lines removed: 0
+	8 nodes merged into 8 nodes
+
+
+Begin netlist:    Mar 14 19:16:43 2021
+	view name list	= ("auLvs" "schematic")
+	stop name list	= ("auLvs")
+	library name	= "or"
+	cell name	= "or"
+	view name	= "schematic"
+	globals lib	= "basic"
+Running Artist Flat Netlisting ...
+End netlist:    Mar 14 19:16:43 2021
+
+Moving original netlist to extNetlist
+Removing parasitic components from netlist
+	presistors removed:  0
+	pcapacitors removed: 0
+	pinductors removed:  0
+	pdiodes removed:     0
+	trans lines removed: 0
+	9 nodes merged into 9 nodes
+
+Running netlist comparison program:  LVS
+Begin comparison:    Mar 14 19:16:43 2021
+@(#)$CDS: LVS.exe version 5.1.0 06/20/2007 02:10 (cicln03) $
+
+The net-lists match.
+
+			     layout  schematic
+				instances
+	un-matched		0	0
+	rewired			0	0
+	size errors		0	0
+	pruned			0	0
+	active			6	6
+	total			6	6
+
+				  nets
+	un-matched		0	0
+	merged			0	0
+	pruned			0	0
+	active			7	7
+	total			7	7
+
+				terminals
+	un-matched		0	0
+	matched but
+	different type		0	0
+	total			5	5
+End comparison:      Mar 14 19:16:44 2021
+
+
+Comparison program completed successfully.

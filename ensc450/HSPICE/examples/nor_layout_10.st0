@@ -1,0 +1,59 @@
+***** HSPICE -- D-2010.03-SP2 32-BIT (Aug 26 2010) linux ******
+ Input File: nor_layout_10.cir
+ lic:
+ lic: FLEXlm: v10.8
+ lic: USER:   escmc27              HOSTNAME: ensc-esil-13
+ lic: HOSTID:                      PID:      2193
+ lic: Using FLEXlm license file:
+ lic: 6053@142.58.21.5
+ lic: Checkout 1 hspice
+ lic: License/Maintenance for hspice will expire on 21-aug-2021/2020.03
+ lic: 8(in_use)/500(total) FLOATING license(s) on SERVER 142.58.21.5
+ lic:
+ init: begin read circuit files,  cpu clock=  1.00E-02
+       option search   = /CMC/tools/synopsys/hspice_vD-2010.03-SP2/hspice
+       option runlvl
+       option post
+ init: end read circuit files,  cpu clock=  2.00E-02 memory=    149 kb
+ init: begin check errors,  cpu clock=  2.00E-02
+ init: end check errors,  cpu clock=  2.00E-02 memory=    443 kb
+ init: begin setup matrix, pivot=     0 cpu clock=  2.00E-02
+       establish matrix -- done,  cpu clock=  2.00E-02 memory=    450 kb
+       re-order matrix -- done,  cpu clock=  2.00E-02 memory=    452 kb
+ init: end setup matrix,  cpu clock=  2.00E-02 memory=    470 kb
+ sweep: parameter       parameter1       begin, #sweeps =   2
+ parameter: ttran           =    2.00E-09
+ dcop: begin dcop,  cpu clock=  2.00E-02
+ dcop: end dcop,  cpu clock=  2.00E-02 memory=    470 kb  tot_iter=       4
+ output: nor_layout_10.mt0
+ sweep: tran tran1    begin, stop_t=  5.00E-08 #sweeps=**** cpu clock=  2.00E-02
+ tran: time= 6.0000E-09 tot_iter=      18 conv_iter=       9 cpu clock= 2.00E-02
+ tran: time= 1.0303E-08 tot_iter=     147 conv_iter=      53 cpu clock= 3.00E-02
+ tran: time= 1.5000E-08 tot_iter=     159 conv_iter=      57 cpu clock= 3.00E-02
+ tran: time= 2.0041E-08 tot_iter=     352 conv_iter=     122 cpu clock= 4.00E-02
+ tran: time= 2.6000E-08 tot_iter=     396 conv_iter=     138 cpu clock= 4.00E-02
+ tran: time= 3.1126E-08 tot_iter=     448 conv_iter=     158 cpu clock= 5.00E-02
+ tran: time= 3.5308E-08 tot_iter=     470 conv_iter=     168 cpu clock= 5.00E-02
+ tran: time= 4.1000E-08 tot_iter=     518 conv_iter=     188 cpu clock= 5.00E-02
+ tran: time= 4.6246E-08 tot_iter=     656 conv_iter=     236 cpu clock= 6.00E-02
+ tran: time= 5.0000E-08 tot_iter=     660 conv_iter=     238 cpu clock= 6.00E-02
+ sweep: tran tran1    end,  cpu clock=  6.00E-02 memory=    470 kb
+ parameter: ttran           =    1.00E-09
+ dcop: begin dcop,  cpu clock=  6.00E-02
+ dcop: end dcop,  cpu clock=  6.00E-02 memory=    470 kb  tot_iter=       8
+ output: nor_layout_10.mt0
+ sweep: tran tran2    begin, stop_t=  5.00E-08 #sweeps=**** cpu clock=  6.00E-02
+ tran: time= 6.5624E-09 tot_iter=      18 conv_iter=       9 cpu clock= 7.00E-02
+ tran: time= 1.0060E-08 tot_iter=     118 conv_iter=      46 cpu clock= 7.00E-02
+ tran: time= 1.5000E-08 tot_iter=     201 conv_iter=      75 cpu clock= 8.00E-02
+ tran: time= 2.0010E-08 tot_iter=     321 conv_iter=     117 cpu clock= 8.00E-02
+ tran: time= 2.5348E-08 tot_iter=     368 conv_iter=     134 cpu clock= 8.00E-02
+ tran: time= 3.1724E-08 tot_iter=     422 conv_iter=     156 cpu clock= 9.00E-02
+ tran: time= 3.5000E-08 tot_iter=     449 conv_iter=     166 cpu clock= 9.00E-02
+ tran: time= 4.0500E-08 tot_iter=     479 conv_iter=     179 cpu clock= 1.00E-01
+ tran: time= 4.6753E-08 tot_iter=     586 conv_iter=     216 cpu clock= 1.00E-01
+ tran: time= 5.0000E-08 tot_iter=     590 conv_iter=     218 cpu clock= 1.00E-01
+ sweep: tran tran2    end,  cpu clock=  1.00E-01 memory=    470 kb
+ sweep: parameter       parameter       1 end
+>info:         ***** hspice job concluded
+ lic: Release hspice token(s)
